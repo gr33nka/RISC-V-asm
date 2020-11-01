@@ -137,7 +137,7 @@ perimeter:
       ret
 
 
-###   a0 = a0 ^ (1/2), accuracy bits (point number) a1
+###   a0 = a0 ^ (1/2), accuracy 4 bits
 sqrt:
       addi sp, sp, -12
       sw s0, 8(sp)
