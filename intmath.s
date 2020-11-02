@@ -1,8 +1,8 @@
 .text
 start:
-      li a0, 1234
-      call sqrt
-      srli a0, a0, 4
+      li a0, -5
+      li a1, -2
+      call multiply
 stop:
       j stop
 
@@ -10,20 +10,44 @@ stop:
 
 ###   a0 = a0 * a1
 multiply:
-      li t0, 0
+      li t6, 0
 
+      li t0, -1
+      li t1, 31
 whilemul:
-      beq a0, zero, endwhilemul
-      addi a0, a0, -1
+      beq t0, t1, endwhilemul
+      addi t0, t0, 1
 
-      add t0, t0, a1
+      sra t2, a1, t0
+      andi t2, t2, 1
+
+      beq t2, zero, whilemul
+      sll t3, a0, t0
+      add t6, t6, t3
 
       j whilemul
 
 endwhilemul:
-      mv  a0, t0 # a0 = t0
+      mv a0, t6
       ret
 
+
+
+###   a0 = a0 * a1
+simplemultiply:
+      li t0, 0
+
+whilesimplemul:
+      beq a0, zero, endwhilesimplemul
+      addi a0, a0, -1
+
+      add t0, t0, a1
+
+      j whilesimplemul
+
+endwhilesimplemul:
+      mv  a0, t0 # a0 = t0
+      ret
 
 
 ###   только положительные a0 = a0 / a1
@@ -137,7 +161,7 @@ perimeter:
       ret
 
 
-###   a0 = a0 ^ (1/2), accuracy 4 bits
+###   a0 = a0 ^ (1/2), accuracy bits (point number) a1
 sqrt:
       addi sp, sp, -12
       sw s0, 8(sp)
@@ -146,6 +170,7 @@ sqrt:
 
       mv s1, a0         # init x
       slli s0, a0, 8    # number
+      mv s3, a1         # сохранили сдвиг
 
       mv a0, s0         # n/x
       mv a1, s1
