@@ -1,11 +1,14 @@
 .globl __start
 
 .data
-	array: .word 1, 2, 3, 4, 5
+	array: 
+		.word 5, 4, 3, 2, 1
+	array2:
+		.word 123, 43, 75, 0, -2
 
 .text
 	__start:
-	la t0, array
+	la t0, array2
 	li t1, 0	# sum
 	li t2, 0
 loop:
