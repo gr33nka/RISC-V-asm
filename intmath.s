@@ -170,7 +170,6 @@ sqrt:
 
       mv s1, a0         # init x
       slli s0, a0, 8    # number
-      mv s3, a1         # сохранили сдвиг
 
       mv a0, s0         # n/x
       mv a1, s1
